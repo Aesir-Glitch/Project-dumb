@@ -2,63 +2,79 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
-var part1,part2,part3;
-var paperObject;
-var ground;
+const Constraint = Matter.Constraint;
 
-function preload()
-{
-	
-}
+var ground,platform;
+var block;
 
 function setup() {
-  createCanvas(1000,600);
+  createCanvas(800,600);
+  engine = Engine.create();
+  world = engine.world;
 
-    ground = new Ground(600,height,1200,20);
-    
-    part1 = createSprite(800,585,120,10);
-    part2 = createSprite(740,560,10,50);
-    part3 = createSprite(860,560,10,50);
-    
-    c2 = color(165,42,42);
-    fill(c2);
-    paperObject = new Paper(250,580,20,20);
+  ground = new Ground(400,600,800,20);
+  platform = new Ground(405,320,280,10);
 
-//    if (keyCode === 32){
-//      Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:-85})
-//  } 
   
-    engine = Engine.create();
-	world = engine.world;
+  block1 = new Block(345,275,30,40);
+  block2 = new Block(375,275,30,40);
+  block3 = new Block(405,275,30,40);
+  block4 = new Block(435,275,30,40);
+  block5 = new Block(465,275,30,40);
+  block6 = new Block(360,235,30,40);
+  block7 = new Block(390,235,30,40);
+  block8 = new Block(420,235,30,40);
+  block9 = new Block(450,235,30,40);
+  block10 = new Block(375,195,30,40);
+  block11 = new Block(405,195,30,40);
+  block12 = new Block(435,195,30,40);
+  block13 = new Block(390,155,30,40);
+  block14 = new Block(420,155,30,40);
+  block15 = new Block(405,115,30,40);
 
-  //Create the Bodies Here.
-  //Matter.Bodies.circle(x,y,radius,[options],[maxSides])
+  polygon = new Block(120,240,50,50);
 
+  sling = new SlingShot(this.polygon.body,{x:100,y:200});
 
-  Engine.run(engine);
-  
-/*  function keyPressed() {
-  if (keyCode === UP_ARROW){
-    Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:-85})
-  }  
-}*/
+  Engine.run(engine);  
+
+}
 
 function draw() {
-  rectMode(CENTER);
-  background(0);
-
-  ground.display();
-  part1.display();
-  part2.display();
-  part3.display();
-  paperObject.display();
-  
+  background(225);  
   drawSprites();
-  }
-}
+  
+  ground.display();
+  platform.display();
 
-function keyPressed() {
-  if (keyCode === UP_ARROW){
-    Matter.Body.applyForce(paperObject.body,paperObject.body.position,{x:85,y:-85})
-  }  
+  block1.display();
+  block2.display();
+  block3.display();
+  block4.display();
+  block5.display();
+  block6.display();
+  block7.display();
+  block8.display();
+  block9.display();
+  block10.display();
+  block11.display();
+  block12.display();
+  block13.display();
+  block14.display();
+  block15.display();
+
+  sling.display();
+  polygon.display();
+
 }
+function mouseDragged() {
+
+  Matter.Body.setPosition(polygon.body,{x:mouseX,y:mouseY});
+  
+  }
+  
+  function mouseReleased() {
+  
+  sling.fly();
+  
+  }
